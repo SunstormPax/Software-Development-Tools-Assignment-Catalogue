@@ -16,7 +16,7 @@ fun runCatalogue() {
             1 -> addItem()
             2 -> listItems()
             3 -> updateItem()
-            4 -> deleteNote()
+            4 -> deleteItem()
             else -> println("Invalid item choice: $option")
         }
     } while (true)
