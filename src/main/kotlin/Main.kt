@@ -20,6 +20,8 @@ fun runCatalogue() {
             5 -> archiveItem()
             6 -> addStatusToItem()
             7 -> updateItemStatus()
+            0 -> exitApp()
+
             else -> println("Invalid item choice: $option")
         }
     } while (true)
@@ -38,7 +40,9 @@ fun Catalogue() = readNextInt(
          > |   5) Archive an item                              |
          > |   6) Add status to an item                        |
          > |   7) Update the status of an item                 |
-         > -----------------------------------------------------  
+         > ----------------------------------------------------- 
+         > |   0) Exit the Catalogue                           |
+         > ----------------------------------------------------- 
          > ==>> """.trimMargin(">")
 )
 
@@ -183,4 +187,9 @@ private fun askUserToChooseStatus(item: Item): Status? {
     }
 
 
+}
+
+fun exitApp() {
+    println("Exiting")
+    exitProcess(0)
 }
