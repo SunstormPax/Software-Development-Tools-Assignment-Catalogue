@@ -19,6 +19,7 @@ fun runCatalogue() {
             4 -> deleteItem()
             5 -> archiveItem()
             6 -> addStatusToItem()
+            7 -> updateItemStatus()
             else -> println("Invalid item choice: $option")
         }
     } while (true)
@@ -36,6 +37,7 @@ fun Catalogue() = readNextInt(
          > |   4) Delete an item                               |
          > |   5) Archive an item                              |
          > |   6) Add status to an item                        |
+         > |   7) Update the status of an item                 |
          > -----------------------------------------------------  
          > ==>> """.trimMargin(">")
 )
@@ -151,4 +153,34 @@ private fun askUserToChooseActiveItem(): Item? {
         }
     }
     return null
+}
+
+fun updateItemStatus() {
+    val item: Item? = askUserToChooseActiveItem()
+    if (item != null) {
+        val status: Status? = askUserToChooseStatus(item)
+        if (status != null) {
+            val newContents = readNextLine("Enter new contents: ")
+            if (item.update(status.statusId, Status(statusContents = newContents))) {
+                println("Status updated")
+            } else {
+                println("Status NOT updated")
+            }
+        } else {
+            println("Invalid Status")
+        }
+    }
+}
+
+private fun askUserToChooseStatus(item: Item): Status? {
+    if (item.numberOfStatuss() > 0) {
+        print(item.listStatuss())
+        return item.findOne(readNextInt("\nEnter the status: "))
+    }
+    else{
+        println ("No status chosen")
+        return null
+    }
+
+
 }
