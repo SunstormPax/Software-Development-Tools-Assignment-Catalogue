@@ -3,7 +3,7 @@ import utils.readNextInt
 import utils.readNextLine
 import ie.setu.controllers.ItemAPI
 import ie.setu.models.Item
-import ie.setu.models.Value
+import ie.setu.models.Status
 import kotlin.system.exitProcess
 
 private val itemAPI = ItemAPI()
@@ -18,6 +18,7 @@ fun runCatalogue() {
             3 -> updateItem()
             4 -> deleteItem()
             5 -> archiveItem()
+            6 -> addStatusToItem()
             else -> println("Invalid item choice: $option")
         }
     } while (true)
@@ -28,12 +29,13 @@ fun Catalogue() = readNextInt(
          > -----------------------------------------------------  
          > |                  Cataloguing App                  |
          > -----------------------------------------------------  
-         > | Catalogue MENU                                    |
+         > | Item Catalogue                                    |
          > |   1) Add an item                                  |
          > |   2) List items                                   |
          > |   3) Update an item                               |
-         > |   4) Delete an item                                |
+         > |   4) Delete an item                               |
          > |   5) Archive an item                              |
+         > |   6) Add status to an item                        |
          > -----------------------------------------------------  
          > ==>> """.trimMargin(">")
 )
@@ -123,4 +125,30 @@ fun archiveItem() {
             println("Archive NOT Successful")
         }
     }
+}
+
+private fun addStatusToItem() {
+    val item: Item? = askUserToChooseActiveItem()
+    if (item != null) {
+        if (item.addStatus(Status(statusContents = readNextLine("\t Status Contents: "))))
+            println("Add Successful!")
+        else println("Add NOT Successful")
+    }
+}
+
+private fun askUserToChooseActiveItem(): Item? {
+    listActiveItems()
+    if (itemAPI.numberOfActiveItems() > 0) {
+        val item = itemAPI.findItem(readNextInt("\nEnter the id of the item: "))
+        if (item != null) {
+            if (item.isItemArchived) {
+                println("Item is NOT Active, it is Archived")
+            } else {
+                return item
+            }
+        } else {
+            println("Item id is not valid")
+        }
+    }
+    return null
 }

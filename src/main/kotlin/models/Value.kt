@@ -1,12 +1,12 @@
 package ie.setu.models
 
-data class Value (var valueId: Int = 0, var valueContents : String, var isValueComplete: Boolean = false){
+data class Status (var statusId: Int = 0, var statusContents : String, var isStatusComplete: Boolean = false){
 
     override fun toString(): String {
-        if (isValueComplete)
-            return "$valueId: $valueContents (Complete)"
+        if (isStatusComplete)
+            return "$statusId: $statusContents (Complete)"
         else
-            return "$valueId: $valueContents (TODO)"
+            return "$statusId: $statusContents (TODO)"
     }
 
 }
