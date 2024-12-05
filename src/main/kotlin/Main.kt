@@ -15,6 +15,7 @@ fun runCatalogue() {
         when (val option = Catalogue()) {
             1 -> addItem()
             2 -> listItems()
+            3 -> updateItem()
             else -> println("Invalid item choice: $option")
         }
     } while (true)
@@ -26,8 +27,9 @@ fun Catalogue() = readNextInt(
          > |                  Cataloguing App                  |
          > -----------------------------------------------------  
          > | Catalogue MENU                                    |
-         > |   1) Add a note                                   |
-         > |   2) List notes                                   |
+         > |   1) Add an item                                  |
+         > |   2) List items                                   |
+         > |   3) Update an item                               |
          > -----------------------------------------------------  
          > ==>> """.trimMargin(">")
 )
@@ -73,3 +75,24 @@ fun listItems() {
 fun listAllItems() = println(itemAPI.listAllItems())
 fun listActiveItems() = println(itemAPI.listActiveItems())
 fun listArchivedItems() = println(itemAPI.listArchivedItems())
+
+fun updateItem() {
+    listItems()
+    if (itemAPI.numberOfItems() > 0) {
+        val id = readNextInt("Enter the id of the item you wish to update: ")
+        if (itemAPI.findItem(id) != null) {
+            val itemName = readNextLine("Enter the item's name: ")
+            val itemCode = readNextInt("Enter the item's Identification Number: ")
+            val itemCategory = readNextLine("Enter a category for the item: ")
+
+            // pass the index of the note and the new note details to NoteAPI for updating and check for success.
+            if (itemAPI.update(id, Item(0, itemName, itemCode, itemCategory, false))){
+                println("Update Successful")
+            } else {
+                println("Update Failed")
+            }
+        } else {
+            println("There are no notes for this index number")
+        }
+    }
+}

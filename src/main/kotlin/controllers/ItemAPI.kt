@@ -32,6 +32,22 @@ class ItemAPI() {
     fun numberOfItems() = items.size
     fun numberOfArchivedItems(): Int = items.count { item: Item -> item.isItemArchived }
     fun numberOfActiveItems(): Int = items.count { item: Item -> !item.isItemArchived }
-}
+
+    fun update(id: Int, item: Item?): Boolean {
+
+        val foundItem = findItem(id)
+        if ((foundItem != null) && (item != null)) {
+            foundItem.itemName = item.itemName
+            foundItem.itemCode = item.itemCode
+            foundItem.itemCategory = item.itemCategory
+            return true
+
+        }
+        return false
+    }
+
+        fun findItem(itemId: Int) = items.find { item -> item.itemId == itemId }
+
+    }
 
 
