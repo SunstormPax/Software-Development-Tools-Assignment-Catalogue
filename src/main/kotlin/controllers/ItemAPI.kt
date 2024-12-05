@@ -46,7 +46,9 @@ class ItemAPI() {
         return false
     }
 
-        fun findItem(itemId: Int) = items.find { item -> item.itemId == itemId }
+    fun findItem(itemId: Int) = items.find { item -> item.itemId == itemId }
+
+    fun delete(id: Int) = items.removeIf { item -> item.itemId == id }
 
     }
 

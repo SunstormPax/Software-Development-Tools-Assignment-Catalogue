@@ -16,6 +16,7 @@ fun runCatalogue() {
             1 -> addItem()
             2 -> listItems()
             3 -> updateItem()
+            4 -> deleteNote()
             else -> println("Invalid item choice: $option")
         }
     } while (true)
@@ -30,6 +31,7 @@ fun Catalogue() = readNextInt(
          > |   1) Add an item                                  |
          > |   2) List items                                   |
          > |   3) Update an item                               |
+         > |   4) Delete a note                                |
          > -----------------------------------------------------  
          > ==>> """.trimMargin(">")
 )
@@ -85,7 +87,6 @@ fun updateItem() {
             val itemCode = readNextInt("Enter the item's Identification Number: ")
             val itemCategory = readNextLine("Enter a category for the item: ")
 
-            // pass the index of the note and the new note details to NoteAPI for updating and check for success.
             if (itemAPI.update(id, Item(0, itemName, itemCode, itemCategory, false))){
                 println("Update Successful")
             } else {
@@ -93,6 +94,19 @@ fun updateItem() {
             }
         } else {
             println("There are no notes for this index number")
+        }
+    }
+}
+
+fun deleteItem() {
+    listItems()
+    if (itemAPI.numberOfItems() > 0) {
+        val id = readNextInt("Enter the id of the note to delete: ")
+        val itemToDelete = itemAPI.delete(id)
+        if (itemToDelete) {
+            println("Delete Successful!")
+        } else {
+            println("Delete NOT Successful")
         }
     }
 }
