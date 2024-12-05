@@ -17,6 +17,7 @@ fun runCatalogue() {
             2 -> listItems()
             3 -> updateItem()
             4 -> deleteItem()
+            5 -> archiveItem()
             else -> println("Invalid item choice: $option")
         }
     } while (true)
@@ -31,7 +32,8 @@ fun Catalogue() = readNextInt(
          > |   1) Add an item                                  |
          > |   2) List items                                   |
          > |   3) Update an item                               |
-         > |   4) Delete a note                                |
+         > |   4) Delete an item                                |
+         > |   5) Archive an item                              |
          > -----------------------------------------------------  
          > ==>> """.trimMargin(">")
 )
@@ -107,6 +109,18 @@ fun deleteItem() {
             println("Delete Successful!")
         } else {
             println("Delete NOT Successful")
+        }
+    }
+}
+
+fun archiveItem() {
+    listActiveItems()
+    if (itemAPI.numberOfActiveItems() > 0){
+        val id = readNextInt("Enter the id of the note to archive: ")
+        if (itemAPI.archiveItem(id)) {
+            println("Archive Successful!")
+        } else {
+            println("Archive NOT Successful")
         }
     }
 }

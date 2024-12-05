@@ -50,6 +50,15 @@ class ItemAPI() {
 
     fun delete(id: Int) = items.removeIf { item -> item.itemId == id }
 
+    fun archiveItem(id: Int): Boolean {
+        val foundItem = findItem(id)
+        if (( foundItem != null) && (!foundItem.isItemArchived)
+            && ( foundItem.checkItemCompletionStatus())) {
+            foundItem.isItemArchived = true
+            return true
+        }
+        return false
+    }
     }
 
 
