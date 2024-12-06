@@ -64,6 +64,22 @@ class ItemAPI() {
         formatListString(
             items.filter { item -> item.itemName.contains(searchString, ignoreCase = true) }
         )
+
+    fun searchStatusByContents(searchString: String): String {
+        return if (numberOfItems() == 0) "No items stored"
+        else {
+            var listOfItems = ""
+            for (item in items) {
+                for (status in item.statuss) {
+                    if (status.statusContents.contains(searchString, ignoreCase = true)) {
+                        listOfItems += "${item.itemId}: ${item.itemName} \n\t${status}\n"
+                    }
+                }
+            }
+            if (listOfItems == "") "No status found for: $searchString"
+            else listOfItems
+        }
+    }
     }
 
 
