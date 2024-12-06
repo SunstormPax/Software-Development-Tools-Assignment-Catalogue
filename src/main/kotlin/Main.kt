@@ -21,6 +21,7 @@ fun runCatalogue() {
             6 -> addStatusToItem()
             7 -> updateItemStatus()
             8 -> deleteItemStatus()
+            9 -> searchItems()
             0 -> exitApp()
 
             else -> println("Invalid item choice: $option")
@@ -42,6 +43,7 @@ fun Catalogue() = readNextInt(
          > |   6) Add status to an item                        |
          > |   7) Update the status of an item                 |
          > |   8) Remove a status applied to an item           |
+         > |   9) Search for an item                           |
          > ----------------------------------------------------- 
          > |   0) Exit the Catalogue                           |
          > ----------------------------------------------------- 
@@ -209,5 +211,15 @@ fun deleteItemStatus() {
                 println("Delete NOT Successful")
             }
         }
+    }
+}
+
+fun searchItems() {
+    val searchName = readNextLine("Enter a description of the item to search by: ")
+    val searchResults = itemAPI.searchItemsByName(searchName)
+    if (searchResults.isEmpty()) {
+        println("No results found")
+    } else {
+        println(searchResults)
     }
 }

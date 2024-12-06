@@ -59,6 +59,11 @@ class ItemAPI() {
         }
         return false
     }
+
+    fun searchItemsByName(searchString: String) =
+        formatListString(
+            items.filter { item -> item.itemName.contains(searchString, ignoreCase = true) }
+        )
     }
 
 
