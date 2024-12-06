@@ -23,9 +23,10 @@ fun runCatalogue() {
             8 -> deleteItemStatus()
             9 -> searchItems()
             10 -> searchStatuss()
+            11 -> giveHelp()
             0 -> exitApp()
 
-            else -> println("Invalid item choice: $option")
+            else -> println("Invalid option entered. Please enter a valid option between 0 and 11")
         }
     } while (true)
 }
@@ -46,6 +47,7 @@ fun Catalogue() = readNextInt(
          > |   8) Remove a status applied to an item           |
          > |   9) Search for an item                           |
          > |   10) Search for a status                         |
+         > |   11) Give Help navigating the catalogue          |
          > ----------------------------------------------------- 
          > |   0) Exit the Catalogue                           |
          > ----------------------------------------------------- 
@@ -83,10 +85,10 @@ fun listItems() {
             1 -> listAllItems()
             2 -> listActiveItems()
             3 -> listArchivedItems()
-            else -> println("Invalid option entered: $option")
+            else -> println("Invalid option entered. Please enter a valid option between 1 and 3")
         }
     } else {
-        println("Option Invalid - No notes stored")
+        println("No items are available. Please add an item first")
     }
 }
 
@@ -220,7 +222,7 @@ fun searchItems() {
     val searchName = readNextLine("Enter a description of the item to search by: ")
     val searchResults = itemAPI.searchItemsByName(searchName)
     if (searchResults.isEmpty()) {
-        println("No results found")
+        println("No items found matching: $searchName")
     } else {
         println(searchResults)
     }
@@ -234,4 +236,36 @@ fun searchStatuss() {
     } else {
         println(searchResults)
     }
+}
+
+fun giveHelp() {
+
+    println("""
+        > -----------------------------------------------------  
+        > |                      Help                         |
+        > -----------------------------------------------------  
+        > |   Press the number key that matches the action    |
+        > |              you wish to perform                  |
+        > |   1) Add a new item to the catalogue              |
+        > |   2) List the items currently listed within       |
+        > |      the catalogue                                |
+        > |   3) Update the details of an item currently      |
+        > |      in the catalogue                             |
+        > |   4) Delete an item currently in the catalogue    |
+        > |   5) Archive an item in the catalogue. This will  |
+        > |      remove the item but leave a record of it.    |
+        > |   6) Add a status to an item, e.g. Available,     |
+        > |      Incoming, Expired                            |
+        > |   7) Change the status of an item that has        |
+        > |      already had a status given to it             |
+        > |   8) Remove a status applied to an item without   |
+        > |      deleting the item itself                     |
+        > |   9) Search for a specific item currently in      |
+        > |      the catalogue by name                        |
+        > |   10) Search for a specific status within the     |
+        > |       catalogue. All items with this status       |
+        > |       will be displayed                           |
+        > |   0) Turn the catalogue off                       |
+        > -----------------------------------------------------
+    """.trimMargin(">"))
 }
