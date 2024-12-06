@@ -20,6 +20,7 @@ fun runCatalogue() {
             5 -> archiveItem()
             6 -> addStatusToItem()
             7 -> updateItemStatus()
+            8 -> deleteItemStatus()
             0 -> exitApp()
 
             else -> println("Invalid item choice: $option")
@@ -40,6 +41,7 @@ fun Catalogue() = readNextInt(
          > |   5) Archive an item                              |
          > |   6) Add status to an item                        |
          > |   7) Update the status of an item                 |
+         > |   8) Remove a status applied to an item           |
          > ----------------------------------------------------- 
          > |   0) Exit the Catalogue                           |
          > ----------------------------------------------------- 
@@ -192,4 +194,19 @@ private fun askUserToChooseStatus(item: Item): Status? {
 fun exitApp() {
     println("Exiting")
     exitProcess(0)
+}
+
+fun deleteItemStatus() {
+    val item: Item? = askUserToChooseActiveItem()
+    if (item != null) {
+        val status: Status? = askUserToChooseStatus(item)
+        if (status != null) {
+            val isDeleted = item.delete(status.statusId)
+            if (isDeleted) {
+                println("Delete Successful!")
+            } else {
+                println("Delete NOT Successful")
+            }
+        }
+    }
 }

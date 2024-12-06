@@ -51,6 +51,10 @@ data class Item (var itemId: Int = 0,
         //if the object was not found, return false, indicating that the update was not successful
         return false
     }
+
+    fun delete(id: Int): Boolean {
+        return statuss.removeIf { status -> status.statusId == id}
+    }
 }
 
 
