@@ -196,6 +196,7 @@ fun exitApp() {
     exitProcess(0)
 }
 
+
 fun deleteItemStatus() {
     val item: Item? = askUserToChooseActiveItem()
     if (item != null) {
