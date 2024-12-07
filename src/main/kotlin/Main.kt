@@ -82,6 +82,7 @@ fun addItem() {
     val itemPrice = readNextLine("Enter the item's price: ")
     val isAdded = itemAPI.add(Item(itemName = itemName, itemCode = itemCode, itemCategory = itemCategory, itemPrice = itemPrice))
 
+
     if (isAdded) {
         println("Added Successfully")
     } else {
