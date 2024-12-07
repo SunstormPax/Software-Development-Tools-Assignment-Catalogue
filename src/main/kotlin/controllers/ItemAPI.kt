@@ -121,6 +121,7 @@ class ItemAPI() {
             foundItem.itemName = item.itemName
             foundItem.itemCode = item.itemCode
             foundItem.itemCategory = item.itemCategory
+            foundItem.itemPrice = item.itemPrice
             return true
 
         }

@@ -79,7 +79,8 @@ fun addItem() {
     val itemName = readNextLine("Enter a title for the item: ")
     val itemCode = readNextInt("Enter an identification number for the item: ")
     val itemCategory = readNextLine("Enter a category for the item: ")
-    val isAdded = itemAPI.add(Item(itemName = itemName, itemCode = itemCode, itemCategory = itemCategory))
+    val itemPrice = readNextLine("Enter the item's price: ")
+    val isAdded = itemAPI.add(Item(itemName = itemName, itemCode = itemCode, itemCategory = itemCategory, itemPrice = itemPrice))
 
     if (isAdded) {
         println("Added Successfully")
@@ -146,8 +147,9 @@ fun updateItem() {
             val itemName = readNextLine("Enter the item's name: ")
             val itemCode = readNextInt("Enter the item's Identification Number: ")
             val itemCategory = readNextLine("Enter a category for the item: ")
+            val itemPrice = readNextLine("Enter the item's price: ")
 
-            if (itemAPI.update(id, Item(0, itemName, itemCode, itemCategory, false))){
+            if (itemAPI.update(id, Item(0, itemName, itemCode, itemCategory, itemPrice, false))){
                 println("Update Successful")
             } else {
                 println("Update Failed")

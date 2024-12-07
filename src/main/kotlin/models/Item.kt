@@ -16,12 +16,14 @@ import utils.formatSetString
  * @property statuses A mutable set of [Status] objects associated with the item.
  */
 
-data class Item (var itemId: Int = 0,
-                var itemName: String,
-                var itemCode: Int,
-                var itemCategory: String,
-                var isItemArchived: Boolean = false,
-                var statuses : MutableSet<Status> = mutableSetOf()) {
+data class Item(
+    var itemId: Int = 0,
+    var itemName: String,
+    var itemCode: Int,
+    var itemCategory: String,
+    var itemPrice: String,
+    var isItemArchived: Boolean = false,
+    var statuses: MutableSet<Status> = mutableSetOf()) {
 
     private var lastStatusId = 0
 
