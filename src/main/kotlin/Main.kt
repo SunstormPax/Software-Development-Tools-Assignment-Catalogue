@@ -8,30 +8,46 @@ import kotlin.system.exitProcess
 
 private val itemAPI = ItemAPI()
 
+/**
+ * Main entry point of the cataloguing application.
+ * Starts the cataloguing system by calling [runCatalogue].
+ */
+
 fun main() = runCatalogue()
+
+/**
+ * Displays the main catalogue menu and processes user input.
+ * Based on the user input, different actions are taken (e.g. adding, updating, deleting items).
+ */
 
 fun runCatalogue() {
     do {
-        when (val option = Catalogue()) {
-            1 -> addItem()
-            2 -> listItems()
-            3 -> updateItem()
-            4 -> deleteItem()
-            5 -> archiveItem()
-            6 -> addStatusToItem()
-            7 -> updateItemStatus()
-            8 -> deleteItemStatus()
-            9 -> searchItems()
-            10 -> searchStatuss()
-            11 -> giveHelp()
-            0 -> exitApp()
+        when (val option = catalogue()) {
+            1 -> addItem()  // Add an item
+            2 -> listItems()  // List all items
+            3 -> updateItem() // Update an item
+            4 -> deleteItem()  // Delete an item
+            5 -> archiveItem()  // Archive an item
+            6 -> addStatusToItem()  // Add status to an item
+            7 -> updateItemStatus()  // Update item status
+            8 -> deleteItemStatus()  // Delete item status
+            9 -> searchItems()  // Search for an item by name
+            10 -> searchStatuses()  // Search for an item by status
+            11 -> giveHelp()  // Display help information
+            0 -> exitApp()  // Exit the application
 
             else -> println("Invalid option entered. Please enter a valid option between 0 and 11")
         }
     } while (true)
 }
 
-fun Catalogue() = readNextInt(
+/**
+ * Displays the main catalogue options and returns the user's choice as an integer.
+ *
+ * @return the chosen option as an integer.
+ */
+
+fun catalogue() = readNextInt(
     """ 
          > -----------------------------------------------------  
          > |                  Cataloguing App                  |
@@ -54,6 +70,11 @@ fun Catalogue() = readNextInt(
          > ==>> """.trimMargin(">")
 )
 
+/**
+ * Adds a new item to the catalogue.
+ * The item name, code, and category are input by the user.
+ */
+
 fun addItem() {
     val itemName = readNextLine("Enter a title for the item: ")
     val itemCode = readNextInt("Enter an identification number for the item: ")
@@ -66,7 +87,9 @@ fun addItem() {
         println("Add Failed")
     }
 }
-
+/**
+ * Lists all items in the catalogue. The user can choose between different categories of items.
+ */
 
 
 fun listItems() {
@@ -92,9 +115,28 @@ fun listItems() {
     }
 }
 
+/**
+ * Displays all items in the catalogue.
+ */
+
 fun listAllItems() = println(itemAPI.listAllItems())
+
+/**
+ * Displays all active items in the catalogue.
+ */
+
 fun listActiveItems() = println(itemAPI.listActiveItems())
+
+/**
+ * Displays all archived items in the catalogue.
+ */
+
 fun listArchivedItems() = println(itemAPI.listArchivedItems())
+
+/**
+ * Updates the details of an existing item.
+ * Prompts the user for the item ID and new details.
+ */
 
 fun updateItem() {
     listItems()
@@ -116,6 +158,11 @@ fun updateItem() {
     }
 }
 
+/**
+ * Deletes an item from the catalogue.
+ * Prompts the user for the item ID and deletes the item.
+ */
+
 fun deleteItem() {
     listItems()
     if (itemAPI.numberOfItems() > 0) {
@@ -129,6 +176,10 @@ fun deleteItem() {
     }
 }
 
+/**
+ * Archives an active item, removing it from the active catalogue but retaining its record.
+ */
+
 fun archiveItem() {
     listActiveItems()
     if (itemAPI.numberOfActiveItems() > 0){
@@ -141,6 +192,11 @@ fun archiveItem() {
     }
 }
 
+/**
+ * Adds a status to an item.
+ * Prompts the user to select an active item and enter a status.
+ */
+
 private fun addStatusToItem() {
     val item: Item? = askUserToChooseActiveItem()
     if (item != null) {
@@ -149,6 +205,12 @@ private fun addStatusToItem() {
         else println("Add NOT Successful")
     }
 }
+
+/**
+ * Prompts the user to select an active item.
+ *
+ * @return the selected active item or null if no valid item is selected.
+ */
 
 private fun askUserToChooseActiveItem(): Item? {
     listActiveItems()
@@ -167,6 +229,11 @@ private fun askUserToChooseActiveItem(): Item? {
     return null
 }
 
+/**
+ * Updates the status of an item.
+ * Prompts the user to select an active item and a status to update.
+ */
+
 fun updateItemStatus() {
     val item: Item? = askUserToChooseActiveItem()
     if (item != null) {
@@ -184,9 +251,16 @@ fun updateItemStatus() {
     }
 }
 
+/**
+ * Prompts the user to choose a status from a list of statuses for an item.
+ *
+ * @param item the item to which the status is applied.
+ * @return the selected status or null if no valid status is chosen.
+ */
+
 private fun askUserToChooseStatus(item: Item): Status? {
-    if (item.numberOfStatuss() > 0) {
-        print(item.listStatuss())
+    if (item.numberOfStatuses() > 0) {
+        print(item.listStatuses())
         return item.findOne(readNextInt("\nEnter the status: "))
     }
     else{
@@ -194,6 +268,9 @@ private fun askUserToChooseStatus(item: Item): Status? {
         return null
     }
 
+    /**
+     * Exits the catalogue application.
+     */
 
 }
 
@@ -202,6 +279,10 @@ fun exitApp() {
     exitProcess(0)
 }
 
+/**
+ * Deletes a status from an item.
+ * Prompts the user to select an active item and a status to delete.
+ */
 
 fun deleteItemStatus() {
     val item: Item? = askUserToChooseActiveItem()
@@ -218,6 +299,12 @@ fun deleteItemStatus() {
     }
 }
 
+/**
+ * Searches for items in the catalogue by their name.
+ * Prompts the user for a description of the item to search by and displays the search results.
+ * If no items are found, a message is displayed indicating that no matching items were found.
+ */
+
 fun searchItems() {
     val searchName = readNextLine("Enter a description of the item to search by: ")
     val searchResults = itemAPI.searchItemsByName(searchName)
@@ -228,7 +315,13 @@ fun searchItems() {
     }
 }
 
-fun searchStatuss() {
+/**
+ * Searches for statuses in the catalogue by their content.
+ * Prompts the user for a status description and displays the search results.
+ * If no statuses are found, a message is displayed indicating that no matching statuses were found.
+ */
+
+fun searchStatuses() {
     val searchContents = readNextLine("Enter the status you wish to search: ")
     val searchResults = itemAPI.searchStatusByContents(searchContents)
     if (searchResults.isEmpty()) {
@@ -237,6 +330,11 @@ fun searchStatuss() {
         println(searchResults)
     }
 }
+
+/**
+ * Displays help information to the user.
+ * Provides a list of actions the user can perform in the catalogue application, along with their corresponding numeric options.
+ */
 
 fun giveHelp() {
 
